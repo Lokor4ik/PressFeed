@@ -1,0 +1,83 @@
+{
+  "name": "press-feed",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "migrate": "npx sequelize db:migrate",
+    "migrate:undo:all": "npx sequelize db:migrate:undo:all",
+    "seed:all": "npx sequelize db:seed:all",
+    "seed:undo:all": "npx sequelize db:seed:undo:all",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "axios": "^0.20.0",
+    "core-js": "^3.6.5",
+    "cors": "^2.8.5",
+    "faker": "^5.1.0",
+    "moment": "^2.29.1",
+    "nuxt": "^2.14.6",
+    "pg": "^8.4.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26.5.0",
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "fibers": "^5.0.0",
+    "nodemon": "^2.0.6",
+    "sass": "^1.28.0",
+    "sass-loader": "^10.0.5"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "rules": {
+      "brace-style": [
+        "error"
+      ],
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "no-unused-vars": [
+        "warn"
+      ],
+      "no-var": [
+        "off"
+      ],
+      "one-var": [
+        "off"
+      ],
+      "arrow-parens": [
+        "off"
+      ],
+      "no-param-reassign": [
+        "off"
+      ],
+      "no-shadow": [
+        "off"
+      ],
+      "import/no-extraneous-dependencies": [
+        "off"
+      ],
+      "no-plusplus": [
+        "off"
+      ]
+    }
+  }
+}
