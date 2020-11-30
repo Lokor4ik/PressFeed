@@ -6,8 +6,7 @@ const { monthRange } = require('../utils/helpers');
 
 const {
   authors: Author,
-  articles: Article,
-  months: Months
+  articles: Article
 } = db;
 
 exports.defineALlMonths = async (req, res) => {
@@ -45,7 +44,19 @@ exports.findAll = async (req, res) => {
 
   try {
     const authors = await Author.findAll({
-      attributes: ['id', 'name', [db.sequelize.literal(`(SELECT COUNT(author_id) FROM author_article WHERE author_article.author_id = authors.id AND articles.published_at BETWEEN ${startOfMonth} AND ${endOfMonth})`), 'PostCount']],
+      attributes: ['id', 'name', [db.sequelize.literal(`(
+        SELECT COUNT (author_article.author_id) 
+        FROM          author_article
+        WHERE         author_article.author_id = authors.id
+        AND EXISTS
+          ( 
+            SELECT  id
+            FROM    articles
+            WHERE   published_at 
+            BETWEEN '${startOfMonth.format('YYYY-MM-01')}' AND '${endOfMonth.format('YYYY-MM-D')}'
+            AND     author_article.article_id = id
+          )
+        )`), 'articles_count']],
       include: [
         {
           model: Article,
@@ -59,7 +70,12 @@ exports.findAll = async (req, res) => {
             attributes: []
           }
         }
-      ]
+      ],
+      order: [
+        [db.sequelize.literal('articles_count DESC')],
+        ['articles', 'published_at', 'ASC']
+      ],
+      limit: 3
     });
 
     res.send(authors);
@@ -69,69 +85,3 @@ exports.findAll = async (req, res) => {
     });
   }
 };
-/*
- const now = new Date(endDate);
-    const daysOfYear = [];
-    for (let d = new Date(startDate); d <= now; d.setMonth(d.getMonth() + 1)) {
-      const currentDate = new Date(d);
-
-      const currentMonthAuthor = data.filter(authorItem => {
-        const dateArticle = new Date(authorItem['articles.published_at']);
-
-        if (dateArticle.getMonth() === currentDate.getMonth()) {
-          return true;
-        }
-
-        return false;
-      });
-      daysOfYear.push(currentMonthAuthor);
-    }
-*/
-
-/*
- const data = await Promise.all(allMonths.map(async (itemMonth, indexMonth) => {
-      const monthAuthors = await Author.findAll({
-        include: [
-          {
-            model: Article,
-            as: 'articles',
-            attributes: ['id', 'published_at'],
-            where: {
-              published_at: {
-                [Op.between]: [itemMonth, allMonths[indexMonth + 1]]
-              }
-            },
-            through: {
-              attributes: []
-            }
-          }
-        ],
-        order: [
-          [Article, 'published_at', 'asc']
-        ]
-      });
-
-      return {
-        month: itemMonth,
-        monthAuthors
-      };
-    }));
-*/
-
-/*
-  const monthCounter = new Date(firstMonth);
-   const allMonths = Array.from(
-     { length: diffMonths + 2 },
-     (_, index) => {
-       if (index === 0) {
-         return firstMonth;
-       }
-
-       if (index === diffMonths + 1) {
-         return lastMonth;
-       }
-
-       return new Date(monthCounter.setMonth(monthCounter.getMonth() + 1));
-     }
-   );
-*/
