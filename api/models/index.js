@@ -3,7 +3,6 @@ const dbConfig = require('../config/db');
 const articleModel = require('./Articles');
 const authorModel = require('./Authors');
 const editionModel = require('./Editions');
-const monthsModel = require('./Months');
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -26,8 +25,7 @@ const db = {
   sequelize,
   articles: articleModel(sequelize, Sequelize),
   authors: authorModel(sequelize, Sequelize),
-  editions: editionModel(sequelize, Sequelize),
-  months: monthsModel(sequelize, Sequelize)
+  editions: editionModel(sequelize, Sequelize)
 };
 
 db.authors.belongsToMany(db.articles, {
