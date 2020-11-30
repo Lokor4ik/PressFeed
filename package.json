@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "faker": "^5.1.0",
+    "fibers": "^5.0.0",
     "moment": "^2.29.1",
     "nuxt": "^2.14.6",
     "pg": "^8.4.1",
@@ -35,7 +36,6 @@
     "eslint": "^7.11.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.1",
-    "fibers": "^5.0.0",
     "nodemon": "^2.0.6",
     "sass": "^1.28.0",
     "sass-loader": "^10.0.5"
