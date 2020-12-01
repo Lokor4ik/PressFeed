@@ -1,20 +1,21 @@
 const moment = require('moment');
 
-function randomInteger(min = 1, max = 3) {
-  return Math.floor(min + Math.random() * (max + 1 - min));
-}
+const randomInteger = (min = 1, max = 3) => (
+  Math.floor(min + Math.random() * (max + 1 - min))
+);
 
-function getUniqueRandomNumber(min, max, usedIndexes) {
+const getUniqueRandomNumber = (min, max, usedIndexes) => {
   const rand = randomInteger(min, max);
+
   if (usedIndexes.has(rand)) {
     return getUniqueRandomNumber(min, max, usedIndexes);
   }
 
   usedIndexes.add(rand);
   return rand;
-}
+};
 
-function monthRange(dateFrom, dateTo) {
+const monthRange = (dateFrom, dateTo) => {
   const startDate = moment(dateFrom);
   const endDate = moment(dateTo);
 
@@ -30,10 +31,18 @@ function monthRange(dateFrom, dateTo) {
   }
 
   return result;
-}
+};
+
+const getPagination = (page, size) => {
+  const limit = size ? +size : 3;
+  const offset = page ? page * limit : 0;
+
+  return { limit, offset };
+};
 
 module.exports = {
   randomInteger,
   getUniqueRandomNumber,
-  monthRange
+  monthRange,
+  getPagination
 };
