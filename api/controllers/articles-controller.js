@@ -1,4 +1,5 @@
 const db = require('../models');
+const { getPagination } = require('../utils/helpers');
 
 const {
   authors: Author,
@@ -6,6 +7,10 @@ const {
 } = db;
 
 exports.findAll = async (req, res) => {
+  const { page, size } = req.query;
+
+  const { limit, offset } = getPagination(page, size);
+
   try {
     const data = await Article.findAll({
       include: [
@@ -17,7 +22,9 @@ exports.findAll = async (req, res) => {
             attributes: []
           }
         }
-      ]
+      ],
+      limit,
+      offset
     });
 
     res.send(data);
