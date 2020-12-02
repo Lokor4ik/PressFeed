@@ -10,7 +10,7 @@ const db = require('./models');
 const app = express();
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL
+  origin: [process.env.CLIENT_URL]
 };
 
 app.use(cors(corsOptions));
