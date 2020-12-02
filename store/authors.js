@@ -35,7 +35,7 @@ export const actions = {
   async fetchAuthors({ commit }, body) {
     try {
       const { data } = await AuthorAPI.getAuthors(body);
-      console.log(data)
+
       commit('setAuthors', data);
     } catch (err) {
       const error = err.response && err.response.data
