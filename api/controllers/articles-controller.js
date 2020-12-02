@@ -34,3 +34,17 @@ exports.findAll = async (req, res) => {
     });
   }
 };
+
+exports.findOne = async (req, res) => {
+  const { id } = req.query;
+
+  try {
+    const data = await Article.findByPk(id);
+
+    res.send(data);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred while retrieving tutorials'
+    });
+  }
+};
