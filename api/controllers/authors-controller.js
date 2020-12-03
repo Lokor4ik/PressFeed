@@ -26,7 +26,17 @@ exports.defineALlMonths = async (req, res) => {
       order: [['published_at', 'asc']]
     });
 
-    const allMonths = monthRange(earlisetArticle, lastMonth);
+    const { published_at: lastArticle } = await Article.findOne({
+      where: {
+        published_at: {
+          [Op.lte]: lastMonth
+        }
+      },
+      attributes: ['published_at'],
+      order: [['published_at', 'desc']]
+    });
+
+    const allMonths = monthRange(earlisetArticle, lastArticle);
 
     res.send(allMonths);
   } catch (err) {
