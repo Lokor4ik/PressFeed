@@ -24,7 +24,8 @@ exports.findAll = async (req, res) => {
         }
       ],
       limit,
-      offset
+      offset,
+      order: [['id', 'ASC']]
     });
 
     res.send(data);
@@ -39,7 +40,20 @@ exports.findOne = async (req, res) => {
   const { id } = req.query;
 
   try {
-    const data = await Article.findByPk(id);
+    const data = await Article.findOne({
+      where: {
+        id
+      },
+      include: [
+        {
+          model: Author,
+          as: 'authors',
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
 
     res.send(data);
   } catch (err) {
