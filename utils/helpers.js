@@ -1,4 +1,4 @@
-export default function formatDate(strDate) {
+export const formatDate = (strDate) => {
   const date = new Date(strDate);
 
   let dd = date.getDate();
@@ -10,4 +10,4 @@ export default function formatDate(strDate) {
   const yy = date.getFullYear();
 
   return `${dd}.${mm}.${yy}`;
-}
+};

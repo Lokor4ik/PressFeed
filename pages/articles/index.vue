@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import formatDate from "~/utils/formate-date";
+import { formatDate } from "~/utils/helpers";
 
 export default {
   async fetch({ store }) {
@@ -49,7 +49,7 @@ export default {
     },
     setQuery() {
       this.$store.dispatch("articles/putQuery", this.stepPage);
-    },
+    }
   },
 };
 </script>
