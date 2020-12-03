@@ -1,7 +1,5 @@
 <template>
-  <section :class="`article-${$route.params.id}`">
-    {{article}}
-  </section>
+  <NavTabsArticle :article='article' />
 </template>
 
 <script>
@@ -16,11 +14,7 @@ export default {
   computed: {
     article() {
       return this.$store.getters["articles/article"];
-    }
-  },
-  methods: {},
+    },
+  }
 };
 </script>
-
-<style lang="scss">
-</style>
