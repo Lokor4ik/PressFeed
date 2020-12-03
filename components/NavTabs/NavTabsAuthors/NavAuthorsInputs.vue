@@ -20,7 +20,7 @@
             v-on="on"
           ></v-text-field>
         </template>
-        <v-date-picker v-model="dateFrom" no-title scrollable>
+        <v-date-picker type="month" :max="dateTo" v-model="dateFrom" no-title scrollable>
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menuFrom = false"> Cancel </v-btn>
           <v-btn text color="primary" @click="$refs.menuFrom.save(dateFrom)">
@@ -48,7 +48,7 @@
             v-on="on"
           ></v-text-field>
         </template>
-        <v-date-picker v-model="dateTo" no-title scrollable>
+        <v-date-picker type="month" :min="dateFrom" v-model="dateTo" no-title scrollable>
           <v-spacer></v-spacer>
           <v-btn text color="primary" @click="menuTo = false"> Cancel </v-btn>
           <v-btn text color="primary" @click="$refs.menuTo.save(dateTo)">
@@ -67,8 +67,8 @@
 <script>
 export default {
   data: () => ({
-    dateFrom: '2020-01-01',
-    dateTo: '2020-02-01',
+    dateFrom: "2020-01",
+    dateTo: "2020-02",
     menuFrom: false,
     menuTo: false,
   }),
@@ -80,7 +80,7 @@ export default {
       };
 
       await this.$store.dispatch("authors/fetchMonths", body);
-    },
+    }
   },
 };
 </script>

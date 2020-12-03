@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar">
-    <ul class="navbar-tabs">
+    <ul class="navbar__tabs">
       <v-tooltip top>
         <template v-slot:activator="{ on, attrs }">
           <li class="tab-item" v-bind="attrs" v-on="on">
@@ -63,8 +63,9 @@ export default {
 <style lang="scss">
 .navbar {
   padding-top: 5rem;
+  padding-bottom: 4rem;
 
-  .navbar-tabs {
+  .navbar__tabs {
     display: flex;
     margin: 0 auto;
     padding-left: 0;
