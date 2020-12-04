@@ -9,10 +9,10 @@ const {
 exports.findAll = async (req, res) => {
   const { page, size } = req.query;
 
-  const { limit, offset } = getPagination(page, size);
+  const { limit, offset } = getPagination(page - 1, size);
 
   try {
-    const data = await Article.findAll({
+    const data = await Article.findAndCountAll({
       include: [
         {
           model: Author,
@@ -25,7 +25,8 @@ exports.findAll = async (req, res) => {
       ],
       limit,
       offset,
-      order: [['id', 'ASC']]
+      order: [['id', 'ASC']],
+      distinct: true
     });
 
     res.send(data);
