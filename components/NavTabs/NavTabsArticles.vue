@@ -1,15 +1,13 @@
 <template>
-  <!-- disable-pagination -->
   <section class="articles">
     <div v-if="!error" class="articles-wrapper">
       <v-data-table
         fixed-header
         :headers="headers"
         :items="articles"
-        :items-per-page="itemsPerPage"
-        :page.sync="page"
-        @page-count="pageCount = $event"
-        hide-default-footer
+        :page="page"
+        :server-items-length="countArticles"
+        @pagination="updatePage"
         class="elevation-1 v-table"
       >
         <template v-slot:body="{ items }">
@@ -30,17 +28,8 @@
               <td>{{ item.published_at }}</td>
             </tr>
           </tbody>
-          <!-- <client-only>
-            <div class="v-table__infinity-wrapper">
-              <InfiniteLoading
-                :identifier="infiniteId"
-                @infinite="infiniteHandler"
-              ></InfiniteLoading>
-            </div>
-          </client-only> -->
         </template>
       </v-data-table>
-      <v-pagination v-model="page" :length="pageCount"></v-pagination>
     </div>
 
     <div v-if="error" class="err">
@@ -50,24 +39,9 @@
 </template>
 
 <script>
-import InfiniteLoading from "vue-infinite-loading";
-
 export default {
-  props: ["fetchMethod", "fetchedArticles", "setQuery", "error", "articles"],
-  components: {
-    InfiniteLoading,
-  },
-  data () {
-      return {
-        page: 1,
-        pageCount: 0,
-        itemsPerPage: 2,
-      }
-  },
+  props: ["fetchMethod", "page", "countArticles", "error", "articles"],
   computed: {
-    infiniteId() {
-      return +new Date();
-    },
     headers() {
       return [
         { text: "Id", value: "id" },
@@ -77,17 +51,12 @@ export default {
         { text: "Authors", value: "authors", width: 250 },
         { text: "Published", value: "published_at" },
       ];
-    },
+    }
   },
   methods: {
-    async infiniteHandler($state) {
-      await this.fetchMethod();
-
-      if (this.fetchedArticles.length) {
-        this.setQuery();
-        $state.loaded();
-      } else {
-        $state.complete();
+    async updatePage(tableData) {
+      if (this.page !== tableData.page) {
+        await this.fetchMethod(tableData.page);
       }
     },
   },
@@ -96,6 +65,10 @@ export default {
 
 <style lang="scss">
 .v-table {
+  .v-data-footer__select {
+    display: none;
+  }
+
   table {
     position: relative;
     thead {
