@@ -2,28 +2,21 @@ import ArticleAPI from '../services/ArticleDataService';
 
 export const state = () => ({
   articles: [],
+  count: 0,
   article: {},
-  fetchedArticles: [],
-  query: {
-    page: 0,
-    size: 10
-  },
+  page: 1,
+  size: 10,
   error: ''
 });
 
 export const mutations = {
-  setArticles(state, articles) {
-    state.articles = [...state.articles, ...articles];
-    state.fetchedArticles = [...articles];
+  setArticles(state, { data, page }) {
+    state.articles = [...data.rows];
+    state.page = page;
+    state.count = data.count;
   },
   setArticle(state, article) {
     state.article = article;
-  },
-  setQuery(state, stepPage) {
-    state.query = {
-      ...state.query,
-      page: state.query.page += stepPage
-    };
   },
   setError(state, error) {
     state.error = error;
@@ -31,11 +24,11 @@ export const mutations = {
 };
 
 export const actions = {
-  async fetchAllArticles({ commit, state }) {
+  async fetchAllArticles({ commit, state }, page) {
     try {
-      const { data: articles } = await ArticleAPI.getAllArticles(state.query);
+      const { data } = await ArticleAPI.getAllArticles({ page, size: state.size });
 
-      commit('setArticles', articles);
+      commit('setArticles', { data, page });
     } catch (err) {
       const error = err.response && err.response.data
         ? err.response.data.message
@@ -56,16 +49,13 @@ export const actions = {
 
       commit('setError', error);
     }
-  },
-  putQuery({ commit }, stepPage) {
-    commit('setQuery', stepPage);
   }
 };
 
 export const getters = {
   articles: s => s.articles,
   article: s => s.article,
-  fetchedArticles: s => s.fetchedArticles,
-  query: s => s.query,
+  page: s => s.page,
+  count: s => s.count,
   error: s => s.error
 };
