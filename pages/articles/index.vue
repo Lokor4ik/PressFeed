@@ -1,8 +1,8 @@
 <template>
   <NavTabsArticles
     :fetchMethod="fetchMethod"
-    :fetchedArticles="fetchedArticles"
-    :setQuery="setQuery"
+    :countArticles="countArticles"
+    :page="page"
     :error="error"
     :articles="articles"
   />
@@ -14,14 +14,10 @@ import { formatDate } from "~/utils/helpers";
 export default {
   async fetch({ store }) {
     if (!store.getters["articles/articles"].length) {
-      await store.dispatch("articles/fetchAllArticles");
-      store.dispatch("articles/putQuery", 1);
+      const page = store.getters["articles/page"];
+
+      await store.dispatch("articles/fetchAllArticles", page);
     }
-  },
-  data() {
-    return {
-      stepPage: 1,
-    };
   },
   computed: {
     articles() {
@@ -33,23 +29,20 @@ export default {
         authors: article.authors.map((authors) => authors.name).join(", "),
       }));
     },
-    query() {
-      return this.$store.getters["articles/query"];
+    countArticles() {
+      return this.$store.getters["articles/count"];
     },
-    fetchedArticles() {
-      return this.$store.getters["articles/fetchedArticles"];
+    page() {
+      return this.$store.getters["articles/page"];
     },
     error() {
       return this.$store.getters["articles/error"];
     },
   },
   methods: {
-    async fetchMethod() {
-      await this.$store.dispatch("articles/fetchAllArticles");
+    async fetchMethod(page) {
+      await this.$store.dispatch("articles/fetchAllArticles", page);
     },
-    setQuery() {
-      this.$store.dispatch("articles/putQuery", this.stepPage);
-    }
   },
 };
 </script>
