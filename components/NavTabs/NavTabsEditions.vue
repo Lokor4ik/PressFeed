@@ -1,8 +1,7 @@
 <template>
   <section class="editions">
     <div v-if="!error" class="tab-pane__editions">
-      <v-data-table :headers="headers" :items="editions" item-key="id">
-      </v-data-table>
+    {{editions}}
     </div>
     <div v-if="error" class="err">
       <h3 class="error-title">{{ error }}</h3>
@@ -12,6 +11,6 @@
 
 <script>
 export default {
-  props: ["headers", "editions", "error"],
+  props: ["editions", "error"],
 };
 </script>
