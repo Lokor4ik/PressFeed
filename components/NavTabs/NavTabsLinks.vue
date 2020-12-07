@@ -18,6 +18,7 @@
         </template>
         <span>All articles and information about them</span>
       </v-tooltip>
+
       <v-tooltip top>
         <template v-slot:activator="{ on, attrs }">
           <li class="tab-item" v-bind="attrs" v-on="on">
@@ -33,23 +34,31 @@
             </nuxt-link>
           </li>
         </template>
-        <span
-          >Editions in which more often than usual there are articles on which
-          more than 1 journalist has worked</span
-        >
+        <span>
+          Editions in which more often than usual there are articles on which
+          more than 1 journalist has worked
+        </span>
       </v-tooltip>
-      <li class="tab-item">
-        <nuxt-link
-          class="tab-link"
-          @click="setActive('authors')"
-          active-class="active"
-          prefetch
-          exact
-          to="/authors"
-        >
-          Top 3 authors
-        </nuxt-link>
-      </li>
+
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <li class="tab-item" v-bind="attrs" v-on="on">
+            <nuxt-link
+              class="tab-link"
+              @click="setActive('authors')"
+              active-class="active"
+              prefetch
+              exact
+              to="/authors"
+            >
+              Top 3 authors
+            </nuxt-link>
+          </li>
+        </template>
+        <span>
+          Top 3 authors by number of articles for each in the interval of months
+        </span>
+      </v-tooltip>
     </ul>
   </nav>
 </template>
