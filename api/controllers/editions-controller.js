@@ -1,4 +1,5 @@
 const db = require('../models');
+const { reduceArticlesCount } = require('../utils/helpers');
 
 const {
   editions: Edition
@@ -20,14 +21,10 @@ exports.findAll = async (req, res) => {
       raw: true
     });
 
-    const reduceArticlesCount = Math.round(
-      countEditions.reduce((acc, curr) => (
-        acc + Number(curr.articles_count)
-      ), 0) / countEditions.length
-    );
+    const articlesCount = reduceArticlesCount(countEditions);
 
     const data = countEditions.filter(editionItem => (
-      editionItem.articles_count >= reduceArticlesCount
+      editionItem.articles_count >= articlesCount
     ));
 
     res.send(data);
