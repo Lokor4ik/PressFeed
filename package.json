@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt --hostname '10.10.10.131' --port 3000",
+    "server": "npx nodemon api/index.js",
+    "dev": "nuxt",
     "migrate": "npx sequelize db:migrate",
     "migrate:undo:all": "npx sequelize db:migrate:undo:all",
     "seed:all": "npx sequelize db:seed:all",
@@ -25,8 +26,7 @@
     "pg": "^8.4.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0",
-    "vue-infinite-loading": "^2.4.5"
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.1.0",
