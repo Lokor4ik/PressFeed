@@ -16,7 +16,7 @@
               <td class="v-table__number">
                 {{ item.id }}
                 <template>
-                  <nuxt-link :to="`articles/${item.id}`">
+                  <nuxt-link prefetch exact :to="`articles/${item.id}`">
                     <v-icon> mdi-arrow-right </v-icon>
                   </nuxt-link>
                 </template>
@@ -51,7 +51,7 @@ export default {
         { text: "Authors", value: "authors", width: 250 },
         { text: "Published", value: "published_at" },
       ];
-    }
+    },
   },
   methods: {
     async updatePage(tableData) {
