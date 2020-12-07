@@ -7,7 +7,7 @@ export default {
   async fetch({ store, params }) {
     const article = store.getters["articles/article"];
 
-    if (article.id !== +params.id) {
+    if (article?.id !== +params.id) {
       await store.dispatch("articles/fetchCurrentArticle", params.id);
     }
   },
