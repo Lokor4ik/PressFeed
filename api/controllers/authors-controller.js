@@ -51,26 +51,15 @@ exports.findAll = async (req, res) => {
 
   const startOfMonth = moment(month);
   const endOfMonth = moment(month).endOf('month').endOf('day');
-
   try {
     const authors = await Author.findAll({
-      attributes: ['id', 'name', [db.sequelize.literal(`(
-        SELECT COUNT (author_article.author_id) 
-        FROM          author_article
-        WHERE         author_article.author_id = authors.id
-        AND EXISTS
-          ( 
-            SELECT  id
-            FROM    articles
-            WHERE   published_at 
-            BETWEEN '${startOfMonth.format('YYYY-MM-01')}' AND '${endOfMonth.format('YYYY-MM-D')}'
-            AND     author_article.article_id = id
-          )
-        )`), 'articles_count']],
+      group: ['authors.id'],
+      attributes: ['id', 'name', [db.sequelize.fn('count', db.sequelize.col('articles.id')), 'articles_count']],
       include: [
         {
           model: Article,
           as: 'articles',
+          attributes: [],
           where: {
             published_at: {
               [Op.between]: [startOfMonth, endOfMonth]
@@ -82,10 +71,10 @@ exports.findAll = async (req, res) => {
         }
       ],
       order: [
-        [db.sequelize.literal('articles_count DESC')],
-        ['articles', 'published_at', 'ASC']
+        [[db.sequelize.literal('articles_count DESC')]]
       ],
-      limit: 3
+      limit: 3,
+      subQuery: false
     });
 
     res.send(authors);
