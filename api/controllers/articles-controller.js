@@ -6,13 +6,25 @@ const {
   articles: Article
 } = db;
 
+exports.countAll = async (req, res) => {
+  try {
+    const [data] = await db.sequelize.query('SELECT COUNT(*) FROM articles');
+
+    res.send(data[0].count);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || 'Some error occurred while retrieving tutorials'
+    });
+  }
+};
+
 exports.findAll = async (req, res) => {
   const { page, size } = req.query;
 
   const { limit, offset } = getPagination(page - 1, size);
 
   try {
-    const data = await Article.findAndCountAll({
+    const data = await Article.findAll({
       include: [
         {
           model: Author,
@@ -25,8 +37,7 @@ exports.findAll = async (req, res) => {
       ],
       limit,
       offset,
-      order: [['id', 'ASC']],
-      distinct: true
+      order: [['id', 'ASC']]
     });
 
     res.send(data);
