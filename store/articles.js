@@ -11,12 +11,14 @@ export const state = () => ({
 
 export const mutations = {
   setArticles(state, { data, page }) {
-    state.articles = [...data.rows];
+    state.articles = [...data];
     state.page = page;
-    state.count = data.count;
   },
   setArticle(state, article) {
     state.article = article;
+  },
+  setCountArticles(state, count) {
+    state.count = count;
   },
   setError(state, error) {
     state.error = error;
@@ -47,6 +49,18 @@ export const actions = {
         ? err.response.data.message
         : 'Oops! Something went wrong.';
 
+      commit('setError', error);
+    }
+  },
+  async fetchCountArticles({ commit }) {
+    try {
+      const { data: count } = await ArticleAPI.getCountArticles();
+
+      commit('setCountArticles', count);
+    } catch (err) {
+      const error = err.response && err.response.data
+        ? err.response.data.message
+        : 'Oops! Something went wrong.';
       commit('setError', error);
     }
   }
