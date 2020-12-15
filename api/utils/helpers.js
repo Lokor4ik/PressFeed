@@ -40,10 +40,10 @@ const getPagination = (page, size) => {
   return { limit, offset };
 };
 
-const reduceArticlesCount = (countEditions) => Math.round(
-  countEditions.reduce((acc, curr) => (
+const calculateAvarageArticles = (editions) => Math.round(
+  editions.reduce((acc, curr) => (
     acc + Number(curr.articles_count)
-  ), 0) / countEditions.length
+  ), 0) / editions.length
 );
 
 module.exports = {
@@ -51,5 +51,5 @@ module.exports = {
   getUniqueRandomNumber,
   monthRange,
   getPagination,
-  reduceArticlesCount
+  calculateAvarageArticles
 };
