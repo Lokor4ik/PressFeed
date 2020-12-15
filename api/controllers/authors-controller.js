@@ -53,7 +53,6 @@ exports.findAll = async (req, res) => {
   const endOfMonth = moment(month).endOf('month').endOf('day');
   try {
     const authors = await Author.findAll({
-      group: ['authors.id'],
       attributes: ['id', 'name', [db.sequelize.fn('count', db.sequelize.col('articles.id')), 'articles_count']],
       include: [
         {
@@ -70,6 +69,7 @@ exports.findAll = async (req, res) => {
           }
         }
       ],
+      group: ['authors.id'],
       order: [
         [[db.sequelize.literal('articles_count DESC')]]
       ],
