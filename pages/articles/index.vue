@@ -13,11 +13,7 @@ import { formatDate } from "~/utils/helpers";
 
 export default {
   async fetch({ store }) {
-    if (!store.getters["articles/articles"].length) {
-      const page = store.getters["articles/page"];
-
-      await store.dispatch("articles/fetchAllArticles", page);
-    }
+    await store.dispatch("articles/fetchCountArticles");
   },
   computed: {
     articles() {
@@ -44,5 +40,12 @@ export default {
       await this.$store.dispatch("articles/fetchAllArticles", page);
     },
   },
+  async mounted() {
+    if (!this.$store.getters["articles/articles"].length) {
+      const page = this.$store.getters["articles/page"];
+
+      await this.fetchMethod(page);
+    }
+  }
 };
 </script>
