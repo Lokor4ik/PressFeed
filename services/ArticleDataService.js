@@ -8,6 +8,10 @@ class ArticleAPI {
   static getCurrentArticle(id) {
     return http.get(`/article?id=${id}`);
   }
+
+  static getCountArticles() {
+    return http.get('/countArticles');
+  }
 }
 
 export default ArticleAPI;
