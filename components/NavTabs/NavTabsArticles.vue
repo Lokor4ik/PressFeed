@@ -8,6 +8,7 @@
         :page="page"
         :server-items-length="countArticles"
         @pagination="updatePage"
+        disable-sort
         class="elevation-1 v-table"
       >
         <template v-slot:body="{ items }">
