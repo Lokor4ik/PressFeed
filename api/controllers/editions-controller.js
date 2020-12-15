@@ -1,13 +1,17 @@
 const db = require('../models');
-const { reduceArticlesCount } = require('../utils/helpers');
+const { calculateAvarageArticles, getPagination } = require('../utils/helpers');
 
 const {
   editions: Edition
 } = db;
 
 exports.findAll = async (req, res) => {
+  const { page, size } = req.query;
+
+  const { limit, offset } = getPagination(page - 1, size);
+
   try {
-    const countEditions = await Edition.findAll({
+    const editions = await Edition.findAll({
       attributes: ['id', 'title', [db.sequelize.literal(`(
         SELECT COUNT (articles.id)
         FROM          articles
@@ -18,13 +22,16 @@ exports.findAll = async (req, res) => {
           WHERE author_article.article_id = articles.id
           ) > 1
         )`), 'articles_count']],
-      raw: true
+      raw: true,
+      limit,
+      offset,
+      order: [[db.sequelize.literal('articles_count DESC')]]
     });
 
-    const articlesCount = reduceArticlesCount(countEditions);
+    const avarageArticlesCount = calculateAvarageArticles(editions);
 
-    const data = countEditions.filter(editionItem => (
-      editionItem.articles_count >= articlesCount
+    const data = editions.filter(editionItem => (
+      editionItem.articles_count >= avarageArticlesCount
     ));
 
     res.send(data);
