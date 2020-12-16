@@ -1,6 +1,6 @@
 <template>
   <section class="articles">
-    <div v-if="!error" class="articles-wrapper">
+    <div v-if="!error && !loading" class="articles-wrapper">
       <v-data-table
         fixed-header
         :headers="headers"
@@ -33,15 +33,26 @@
       </v-data-table>
     </div>
 
-    <div v-if="error" class="err">
+    <div v-else-if="error" class="err">
       <h3 class="error-title">{{ error }}</h3>
+    </div>
+
+    <div v-else-if="loading">
+      <Loader />
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  props: ["fetchMethod", "page", "countArticles", "error", "articles"],
+  props: [
+    "fetchMethod",
+    "page",
+    "countArticles",
+    "error",
+    "loading",
+    "articles",
+  ],
   computed: {
     headers() {
       return [
@@ -105,10 +116,5 @@ export default {
 .v-table__authors,
 .v-table__edition-title {
   max-width: 200px;
-}
-.v-table__infinity-wrapper {
-  position: absolute;
-  right: 50%;
-  transform: translateX(50%);
 }
 </style>
