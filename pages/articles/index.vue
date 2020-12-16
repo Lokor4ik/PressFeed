@@ -5,6 +5,7 @@
     :page="page"
     :error="error"
     :articles="articles"
+    :loading="loading"
   />
 </template>
 
@@ -13,7 +14,9 @@ import { formatDate } from "~/utils/helpers";
 
 export default {
   async fetch({ store }) {
-    await store.dispatch("articles/fetchCountArticles");
+    if (!store.getters["articles/count"]) {
+      await store.dispatch("articles/fetchCountArticles");
+    }
   },
   computed: {
     articles() {
@@ -31,6 +34,9 @@ export default {
     page() {
       return this.$store.getters["articles/page"];
     },
+    loading() {
+      return this.$store.getters["articles/loading"];
+    },
     error() {
       return this.$store.getters["articles/error"];
     },
@@ -42,10 +48,8 @@ export default {
   },
   async mounted() {
     if (!this.$store.getters["articles/articles"].length) {
-      const page = this.$store.getters["articles/page"];
-
-      await this.fetchMethod(page);
+      await this.fetchMethod(this.page);
     }
-  }
+  },
 };
 </script>
