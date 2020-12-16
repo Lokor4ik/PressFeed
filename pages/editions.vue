@@ -1,5 +1,5 @@
 <template>
-  <NavTabsEditions :error="error" :editions="editions" />
+  <NavTabsEditions :editions="editions" :loading="loading" :error="error" />
 </template>
 
 <script>
@@ -13,9 +13,15 @@ export default {
     editions() {
       return this.$store.getters["editions/editions"];
     },
+    loading() {
+      return this.$store.getters["editions/loading"];
+    },
     error() {
-       return this.$store.getters["editions/error"];
+      return this.$store.getters["editions/error"];
     },
   },
+  mounted() {
+    this.$store.dispatch("editions/mounted");
+  }
 };
 </script>
