@@ -1,15 +1,11 @@
 const db = require('../models');
-const { calculateAvarageArticles, getPagination } = require('../utils/helpers');
+const { calculateAvarageArticles } = require('../utils/helpers');
 
 const {
   editions: Edition
 } = db;
 
 exports.findAll = async (req, res) => {
-  const { page, size } = req.query;
-
-  const { limit, offset } = getPagination(page - 1, size);
-
   try {
     const editions = await Edition.findAll({
       attributes: ['id', 'title', [db.sequelize.literal(`(
@@ -23,8 +19,6 @@ exports.findAll = async (req, res) => {
           ) > 1
         )`), 'articles_count']],
       raw: true,
-      limit,
-      offset,
       order: [[db.sequelize.literal('articles_count DESC')]]
     });
 
