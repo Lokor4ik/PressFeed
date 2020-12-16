@@ -3,30 +3,21 @@
     <div class="article-title">Article: {{ $route.params.id }}</div>
 
     <div class="article-content">
-      <div class="article-box">
-        <p class="article-text">Title:</p>
-        <p class="article-text">{{ article.title }}</p>
+      <div class="article-item">
+        <p class="article-item-title">Title:</p>
+        <p class="article-item-title">Edition title:</p>
+        <p class="article-item-title">Content:</p>
+        <p class="article-item-title">Published:</p>
+        <p class="article-item-title">Authors:</p>
       </div>
 
-      <div class="article-box">
-        <p class="article-text">Edition title:</p>
-        <p class="article-text">{{ article.edition_title }}</p>
-      </div>
-
-      <div class="article-box">
-        <p class="article-text">Content:</p>
-        <p class="article-text">{{ article.body }}</p>
-      </div>
-
-      <div class="article-box">
-        <p class="article-text">Published:</p>
-        <p class="article-text">
+      <div class="article-item">
+        <p class="article-item-text">{{ article.title }}</p>
+        <p class="article-item-text">{{ article.edition_title }}</p>
+        <p class="article-item-text">{{ article.body }}</p>
+        <p class="article-item-text">
           {{ formatDate(article.published_at) }}
         </p>
-      </div>
-
-      <div class="article-box">
-        <p class="article-text">Authors:</p>
         <ul>
           <li v-for="(item, index) in article.authors" :key="item.id">
             {{ `${index + 1}. ${item.name}` }}
@@ -54,17 +45,18 @@ export default {
   line-height: 2.5rem;
 }
 .article-content {
+  display: flex;
   margin-top: 20px;
 }
-.article-box {
-  display: flex;
+.article-item {
   margin-bottom: 8px;
-}
-.article-text {
-  margin-bottom: 0px !important;
-  &:first-child {
-    font-weight: 700;
-    margin-right: 8px;
+
+  ul {
+    padding: 0;
   }
+}
+.article-item-title {
+  font-weight: 700;
+  margin-right: 15px;
 }
 </style>
