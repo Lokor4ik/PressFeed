@@ -5,7 +5,8 @@
       label="Select report date"
       v-on:change="handleChange"
     ></v-select>
-    <div class="authors-data">
+
+    <div v-if="!loading" class="authors-data">
       <v-card
         v-for="(item, index) in authors"
         :key="index + item.id"
@@ -29,12 +30,16 @@
         </div>
       </v-card>
     </div>
+
+    <div v-else-if="loading">
+      <Loader />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["allMonths", "authors", "handleChange"],
+  props: ["allMonths", "loading", "authors", "handleChange"],
   methods: {
     definePlace(place) {
       switch (place) {
@@ -46,7 +51,7 @@ export default {
           return "III";
 
         default:
-          return '';
+          return "";
       }
     },
   },
