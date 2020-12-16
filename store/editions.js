@@ -2,15 +2,20 @@ import EditionAPI from '../services/EditionsDataService';
 
 export const state = () => ({
   editions: [],
+  loading: true,
   error: ''
 });
 
 export const mutations = {
   setEditions(state, editions) {
-    state.editions = editions;
+    state.editions = [...editions];
+  },
+  setMounted(state) {
+    state.loading = false;
   },
   setError(state, error) {
     state.error = error;
+    state.loading = false;
   }
 };
 
@@ -27,10 +32,14 @@ export const actions = {
 
       commit('setError', error);
     }
+  },
+  mounted({ commit }) {
+    commit('setMounted');
   }
 };
 
 export const getters = {
   editions: s => s.editions,
+  loading: s => s.loading,
   error: s => s.error
 };

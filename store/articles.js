@@ -6,12 +6,14 @@ export const state = () => ({
   article: {},
   page: 1,
   size: 10,
+  loading: true,
   error: ''
 });
 
 export const mutations = {
   setArticles(state, { data, page }) {
     state.articles = [...data];
+    state.loading = false;
     state.page = page;
   },
   setArticle(state, article) {
@@ -70,6 +72,7 @@ export const getters = {
   articles: s => s.articles,
   article: s => s.article,
   page: s => s.page,
+  loading: s => s.loading,
   count: s => s.count,
   error: s => s.error
 };

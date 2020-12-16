@@ -2,6 +2,7 @@ import AuthorAPI from '../services/AuthorDataService';
 
 export const state = () => ({
   allMonths: [],
+  loading: false,
   authors: [],
   error: ''
 });
@@ -12,6 +13,9 @@ export const mutations = {
   },
   setAuthors(state, authors) {
     state.authors = authors;
+  },
+  setLoading(state) {
+    state.loading = !state.loading;
   },
   setError(state, error) {
     state.error = error;
@@ -34,9 +38,12 @@ export const actions = {
   },
   async fetchAuthors({ commit }, body) {
     try {
+      commit('setLoading');
+
       const { data } = await AuthorAPI.getAuthors(body);
 
       commit('setAuthors', data);
+      commit('setLoading');
     } catch (err) {
       const error = err.response && err.response.data
         ? err.response.data.message
@@ -50,5 +57,6 @@ export const actions = {
 export const getters = {
   allMonths: s => s.allMonths,
   authors: s => s.authors,
+  loading: s => s.loading,
   error: s => s.error
 };
