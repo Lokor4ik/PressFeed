@@ -1,12 +1,19 @@
 <template>
   <section class="authors">
-    <NavAuthorsInputs />
-    <NavAuthorsReports
-      v-show="allMonths.length"
-      :allMonths="allMonths"
-      :authors="authors"
-      :handleChange="handleChange"
-    />
+    <div v-if="!error">
+      <NavAuthorsInputs />
+      <NavAuthorsReports
+        v-show="allMonths.length"
+        :allMonths="allMonths"
+        :authors="authors"
+        :loading="loading"
+        :handleChange="handleChange"
+      />
+    </div>
+
+    <div v-else-if="error" class="err">
+      <h3 class="error-title">{{ error }}</h3>
+    </div>
   </section>
 </template>
 
@@ -18,6 +25,10 @@ export default {
     },
     authors() {
       return this.$store.getters["authors/authors"];
+    },
+    loading() {
+      console.log(this.$store.getters["authors/loading"])
+      return this.$store.getters["authors/loading"];
     },
     error() {
       return this.$store.getters["authors/error"];
