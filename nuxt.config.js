@@ -40,7 +40,7 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/vuetify'
+    ['@nuxtjs/vuetify', { treeShake: true }]
   ],
 
   serverMiddleware: {
@@ -48,5 +48,6 @@ export default {
   },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    extractCSS: true
   }
 };
