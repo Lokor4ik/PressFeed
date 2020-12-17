@@ -27,7 +27,6 @@ export default {
       return this.$store.getters["authors/authors"];
     },
     loading() {
-      console.log(this.$store.getters["authors/loading"])
       return this.$store.getters["authors/loading"];
     },
     error() {

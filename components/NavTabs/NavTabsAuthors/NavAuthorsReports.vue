@@ -16,16 +16,16 @@
         <div class="author-item__place">{{ definePlace(index + 1) }}</div>
         <div class="author-item__initials">
           <div class="author-name">
-            <div class="author-item__title">Name:</div>
-            <div class="author-item__text">
+            <p class="author-item__title">Name:</p>
+            <p class="author-item__text">
               {{ item.name }}
-            </div>
+            </p>
           </div>
           <div class="author-articles">
-            <div class="author-item__title">Number of articles:</div>
-            <div class="author-item__text">
+            <p class="author-item__title">Number of articles:</p>
+            <p class="author-item__text">
               {{ item.articles_count }}
-            </div>
+            </p>
           </div>
         </div>
       </v-card>
@@ -79,13 +79,17 @@ export default {
   font-size: 25px;
 }
 .author-name {
-  &:first-child {
-    .author-item__text {
-      margin-bottom: 15px;
-    }
+  .author-item__text {
+    margin-bottom: 15px;
+  }
+}
+.author-articles {
+  .author-item__text {
+    margin-bottom: 0 !important;
   }
 }
 .author-item__title {
   font-weight: bold;
+  margin-bottom: 0 !important;
 }
 </style>
