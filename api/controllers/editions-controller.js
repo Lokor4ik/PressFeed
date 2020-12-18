@@ -25,17 +25,26 @@ exports.findAll = async (req, res) => {
     )); */
 
     const editions = await db.sequelize.query(`
-      SELECT      e.title, e.id, ar.published_at, ar.title as ar_title, COUNT(au.id) as au_count
-      FROM        editions e
-      INNER JOIN  articles  ar
-        ON      ar.edition_id = e.id
-      INNER JOIN author_article aa 
+      SELECT       e.title, e.id,  COUNT(DISTINCT au.id) as au_count
+      FROM         editions e
+      INNER JOIN   articles  ar
+        ON         ar.edition_id = e.id
+      INNER JOIN   author_article aa 
         ON ar.id = aa.article_id
-      INNER JOIN authors au 
-        ON aa.author_id = au.id
-      GROUP BY    e.id, e.title, ar.published_at, ar_title
+      INNER JOIN   authors au 
+        ON         aa.author_id = au.id
+      GROUP BY     e.id, e.title
+      HAVING
+        COUNT(au.id) > 1 
+      ORDER BY e.id
     `);
-
+    /*
+    select *
+    from (
+       select gid, count(*) as tmpcount from gd group by gid
+    ) as tmp
+    where tmpcount > 10;
+    */
     res.send(editions[0]);
   } catch (err) {
     res.status(500).send({
