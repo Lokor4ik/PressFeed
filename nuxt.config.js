@@ -17,7 +17,7 @@ export default {
     height: '10px'
   },
   env: {
-    serverUrl: process.env.SERVER_URL || 'http://localhost:5000'
+    baseUrl: process.env.API_URL || 'http://localhost:5000'
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
