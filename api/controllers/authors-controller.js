@@ -41,7 +41,7 @@ exports.defineALlMonths = async (req, res) => {
     res.send(allMonths);
   } catch (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving tutorials'
+      message: err.message || 'Some error occurred while retrieving all months'
     });
   }
 };
@@ -80,7 +80,7 @@ exports.findAll = async (req, res) => {
     res.send(authors);
   } catch (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving tutorials'
+      message: err.message || 'Some error occurred while retrieving authors'
     });
   }
 };

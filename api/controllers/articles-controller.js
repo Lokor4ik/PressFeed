@@ -13,7 +13,7 @@ exports.countAll = async (req, res) => {
     res.send(data[0].count);
   } catch (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving tutorials'
+      message: err.message || 'Some error occurred while retrieving count of articles'
     });
   }
 };
@@ -43,7 +43,7 @@ exports.findAll = async (req, res) => {
     res.send(data);
   } catch (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving tutorials'
+      message: err.message || 'Some error occurred while retrieving articles'
     });
   }
 };
@@ -70,7 +70,7 @@ exports.findOne = async (req, res) => {
     res.send(data);
   } catch (err) {
     res.status(500).send({
-      message: err.message || 'Some error occurred while retrieving tutorials'
+      message: err.message || 'Some error occurred while retrieving article'
     });
   }
 };
