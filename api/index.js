@@ -2,10 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const articleRoutes = require('./routes/articles');
-const authorRoutes = require('./routes/authors');
-const editionRoutes = require('./routes/editions');
 const db = require('./models');
+const routes = require('./routes');
 
 const app = express();
 
@@ -16,9 +14,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(articleRoutes);
-app.use(authorRoutes);
-app.use(editionRoutes);
+
+routes(app);
 
 db.sequelize.sync();
 
