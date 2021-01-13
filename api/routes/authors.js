@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const authors = require('../controllers/authors-controller');
 
-router.post('/api/allMonths', authors.defineALlMonths);
-router.post('/api/authors', authors.findAll);
+router.post('/allMonths', authors.defineALlMonths);
+router.post('/authors', authors.findAll);
 
 module.exports = router;
