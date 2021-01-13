@@ -2,8 +2,10 @@ const articleRoutes = require('./articles');
 const authorRoutes = require('./authors');
 const editionRoutes = require('./editions');
 
-exports.routes = (app) => {
-  app.use(articleRoutes);
-  app.use(authorRoutes);
-  app.use(editionRoutes);
+function routes(app) {
+  app.use('/api', articleRoutes);
+  app.use('/api', authorRoutes);
+  app.use('/api', editionRoutes);
 }
+
+module.exports = { routes };
