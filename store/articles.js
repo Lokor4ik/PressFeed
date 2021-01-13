@@ -56,7 +56,7 @@ export const actions = {
   },
   async fetchCountArticles({ commit }) {
     try {
-      const { data: count } = await ArticleAPI.getCountArticles();
+      const { data: { count } } = await ArticleAPI.getCountArticles();
 
       commit('setCountArticles', count);
     } catch (err) {
