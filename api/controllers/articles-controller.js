@@ -8,9 +8,9 @@ const {
 
 exports.countAll = async (req, res) => {
   try {
-    const [data] = await db.sequelize.query('SELECT COUNT(*) FROM articles');
+    const count = await Article.count({ distinct: true, col: 'id' });
 
-    res.send(data[0].count);
+    res.send({ count });
   } catch (err) {
     res.status(500).send({
       message: err.message || 'Some error occurred while retrieving count of articles'
